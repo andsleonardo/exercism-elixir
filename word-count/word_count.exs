@@ -6,18 +6,18 @@ defmodule Words do
   """
   @spec count(String.t()) :: map
   def count(sentence) do
-    words_list = to_words_list(sentence)
-    Map.new(words_list, &{ &1, occurrences_count(words_list, &1) })
+    sentence
+    |> to_words_list
+    |> Enum.reduce(%{}, &update_count/2)
   end
 
   defp to_words_list(sentence) do
     sentence
     |> String.downcase
-    |> String.replace(~r/[^\p{L}\d\-]/u, " ")
-    |> String.split
+    |> String.split(~r/[^\p{L}\d\-]/u, trim: true)
   end
 
-  defp occurrences_count(enum, element) do
-    Enum.count(enum, &(&1 == element))
+  defp update_count(el, acc) do
+    Map.update(acc, el, 1, &(&1 + 1))
   end
 end
