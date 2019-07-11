@@ -10,8 +10,8 @@ defmodule Strain do
     List.foldr(list, [], &keep_update(&2, &1, fun.(&1)))
   end
 
-  def keep_update(acc, e, true), do: List.insert_at(acc, 0, e)
-  def keep_update(acc, _, false), do: acc
+  defp keep_update(acc, e, true), do: List.insert_at(acc, 0, e)
+  defp keep_update(acc, _, false), do: acc
 
   @doc """
   Given a `list` of items and a function `fun`, return the list of items where
@@ -24,6 +24,6 @@ defmodule Strain do
     List.foldr(list, [], &discard_update(&2, &1, fun.(&1)))
   end
 
-  def discard_update(acc, _, true), do: acc
-  def discard_update(acc, e, false), do: List.insert_at(acc, 0, e)
+  defp discard_update(acc, _, true), do: acc
+  defp discard_update(acc, e, false), do: List.insert_at(acc, 0, e)
 end
